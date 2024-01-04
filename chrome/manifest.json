@@ -11,7 +11,9 @@
     "activeTab",
     "storage",
     "tabs",
-    "cookies"
+    "cookies",
+    "webRequest",
+    "webRequestBlocking"
   ],
   "background": {
     "service_worker": "./dist/background.bundle.js"
@@ -29,6 +31,9 @@
       "run_at": "document_end"
     }
   ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
   "host_permissions": [
     "https://cuutruyen.net/*",
     "https://cuutruyent9sv7.xyz/*",

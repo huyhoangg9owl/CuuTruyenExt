@@ -371,13 +371,18 @@ const global = {
 const queryTags = [];
 const limit = pLimit(3);
 async function getTag(tag) {
-    const url = 'https://cuutruyent9sv7.xyz/api/v2/tags/' + tag;
-    const res = await fetch(url);
+    const apiUrl = 'https://cuutruyent9sv7.xyz/api/v2/tags/' + tag;
+    const res = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+            Accept: 'application/json',
+        },
+    });
     const { _metadata: { total_pages, per_page }, } = await res.json();
     const promises = [];
     for (let i = 1; i <= total_pages; i++) {
         const promise = limit(async () => {
-            const resp = await fetch(url + `?page=${i}&per_page=${per_page}`);
+            const resp = await fetch(apiUrl + `?page=${i}&per_page=${per_page}`);
             const data = await resp.json();
             return data;
         });
@@ -477,7 +482,10 @@ function render(data) {
 
 const search_limit = pLimit(3);
 async function tagHTML(slug) {
-    const tag = await fetch('https://cuutruyent9sv7.xyz/api/v2/tags/' + slug);
+    const apiUrl = 'https://cuutruyent9sv7.xyz/api/v2/tags/' + slug;
+    const tag = await fetch(apiUrl, {
+        method: 'GET',
+    });
     const { _metadata, data: { tag: { name }, }, } = await tag.json();
     return `<div class="checkbox-item">
 		<input type="checkbox" id="${slug}" name="${slug}" value="${slug}">

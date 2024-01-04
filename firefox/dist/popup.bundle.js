@@ -356,23 +356,19 @@ const manifest_namespaceObject = {"i8":"1.0.1"};
 
 
 const port = chrome.runtime.connect({ name: 'getInfo' });
-fetch('https://raw.githubusercontent.com/huyhoangg9owl/CuuTruyenExt/main/manifest.json')
-    .then((res) => res.json())
-    .then((res) => {
-    document.getElementById('app').innerHTML = `<div style="padding: 20px; text-align: center;"><h1>Code by 9OwL</h1><p>Version ${manifest_namespaceObject.i8}</p><p>Newest Version: ${res.version}</p></div>`;
-    port.onMessage.addListener(async ({ value }) => {
-        document.getElementById('app').innerHTML = await render(value);
-        const remove = document.querySelectorAll('#remove');
-        remove.forEach((r) => {
-            r.addEventListener('click', () => {
-                removeManga(r.getAttribute('data-id'), value.host);
-                r.parentElement?.parentElement?.remove();
-            });
+document.getElementById('app').innerHTML = `<div style="padding: 20px; text-align: center;"><h1>Code by 9OwL</h1><p>Version ${manifest_namespaceObject.i8}</p></div>`;
+port.onMessage.addListener(async ({ value }) => {
+    document.getElementById('app').innerHTML = await render(value);
+    const remove = document.querySelectorAll('#remove');
+    remove.forEach((r) => {
+        r.addEventListener('click', () => {
+            removeManga(r.getAttribute('data-id'), value.host);
+            r.parentElement?.parentElement?.remove();
         });
     });
-    document.querySelector('#search')?.addEventListener('click', () => {
-        chrome.runtime.connect({ name: 'openSearch' });
-    });
+});
+document.querySelector('#search')?.addEventListener('click', () => {
+    chrome.runtime.connect({ name: 'openSearch' });
 });
 
 })();

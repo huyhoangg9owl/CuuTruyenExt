@@ -209,6 +209,9 @@ const global = {
 
 ;// CONCATENATED MODULE: ./background.ts
 
+chrome.runtime.onInstalled.addListener(() => {
+    console.log('Extension installed!');
+});
 chrome.runtime.onConnect.addListener(function (port) {
     if (port.name === 'getInfo') {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
